@@ -48,23 +48,23 @@ The system follows a clean, decoupled client-server architecture:
 ### 1. Backend Setup (.NET 10 API)
 
 1. Navigate to the backend directory:
-   ```bash
+   ```
    cd backend/TaskManager.API
 Restore NuGet dependencies:
 
-Bash
+
 
 
 dotnet restore
 Update database or apply EF Core migrations (using In-Memory or PostgreSQL/SQL Server context):
 
-Bash
+
 
 
 dotnet ef database update
 Run the API project:
 
-Bash
+
 
 
 dotnet run
@@ -75,13 +75,13 @@ Open Swagger/OpenAPI documentation in browser: https://localhost:7123/swagger
 2. Frontend Setup (Flutter Client)
 Navigate to the frontend directory:
 
-Bash
+
 
 
 cd frontend/my_app
 Fetch dependencies:
 
-Bash
+
 
 
 flutter pub get
@@ -95,15 +95,14 @@ Physical Device: http://<YOUR_LOCAL_IP>:5246/api
 
 Launch the application:
 
-Bash
+
 
 
 # Run on default connected device / desktop
 flutter run
 
-# Explicitly run on desktop (macOS/Windows)
-flutter run -d macos
-flutter run -d windows
+# Explicitly run on desktop (Chrome)
+flutter run -d chrome
 📡 Endpoint Contracts & API Reference
 Base URL
 http://localhost:5246/api/v1
@@ -115,8 +114,6 @@ URL: /tasks
 
 Method: GET
 
-Headers: Authorization: Bearer <token>
-
 Response (200 OK):
 
 JSON
@@ -124,10 +121,10 @@ JSON
 
 [
   {
-    "id": "3fa85f64-5717-4562-b3fc-2c963f66afa6",
+    "id": " ",
     "title": "Complete Task Manager App",
-    "description": "Finish Flutter MVVM setup and .NET 10 integration",
-    "dueDate": "2026-10-01T12:00:00Z",
+    "description": "Finish Flutter MVVM setup",
+    "dueDate": "2026-10-01",
     "isCompleted": false
   }
 ]
@@ -138,12 +135,6 @@ URL: /tasks
 
 Method: POST
 
-Headers:
-
-Content-Type: application/json
-
-Authorization: Bearer <token>
-
 Request Body:
 
 JSON
@@ -151,8 +142,8 @@ JSON
 
 {
   "title": "Submit Project",
-  "description": "Present solution to senior developers",
-  "dueDate": "2026-10-05T09:00:00Z"
+  "description": "Present to devs",
+  "dueDate": "2026-09-05"
 }
 Response (201 Created):
 
@@ -160,10 +151,10 @@ JSON
 
 
 {
-  "id": "c39a04a1-8d2b-47e2-9b0d-13a52e691888",
+  "id": " ",(auto incremented)
   "title": "Submit Project",
   "description": "Present solution to senior developers",
-  "dueDate": "2026-10-05T09:00:00Z",
+  "dueDate": "2026-09-05",
   "isCompleted": false
 }
 Response (400 Bad Request - Validation Failure):
@@ -180,8 +171,8 @@ JSON
     "DueDate": ["Due date must be in the future."]
   }
 }
-3. Update Task Status (Toggle Completion)
-Updates the completion status of an existing task.
+3. Update Task Status 
+
 
 URL: /tasks/{id}/status
 
@@ -201,7 +192,7 @@ JSON
 
 
 {
-  "id": "c39a04a1-8d2b-47e2-9b0d-13a52e691888",
+  "id": " ",
   "isCompleted": true
 }
 Response (404 Not Found):
@@ -213,7 +204,7 @@ JSON
   "type": "NotFound",
   "title": "Resource Not Found",
   "status": 404,
-  "detail": "Task with ID 'c39a04a1-8d2b-47e2-9b0d-13a52e691888' was not found."
+  "detail": "Task with ID ' ' was not found."
 }
 4. Delete Task
 Deletes a task by ID.
@@ -224,16 +215,9 @@ Method: DELETE
 
 Response: 204 No Content
 
-🔒 Error Handling & Security
-Token Storage: JWT tokens are stored on mobile devices using flutter_secure_storage (iOS Keychain & Android Keystore) to guarantee secure encrypted storage at rest.
-
-Backend Exceptions: All unhandled exceptions in .NET are caught by custom global exception handling middleware and serialized into standard ProblemDetails payloads, preventing internal stack traces from leaking to public clients.
-
-
----
 
 ### Direct Next Step
 Save this content to `README.md` at the root of your project directory and commit it to git:
-```bash
+```
 git add README.md
-git commit -m "docs: add complete project README with setup and endpoint contracts"
+git commit -m "docs: add complete project README"
