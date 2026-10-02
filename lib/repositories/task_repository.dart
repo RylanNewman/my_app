@@ -55,7 +55,7 @@ class TaskRepository {
         // CASE A: New offline task (temp ID < 0) -> Call CREATE endpoint
         if (task.id != null && task.id! < 0) {
           debugPrint(
-            '🔄 [SYNCING NEW]: Uploading offline task "${task.title}"...',
+            '🔄 Uploading offline task "${task.title}"...',
           );
           try {
             final syncedTask = await apiService.createTask(task);
@@ -66,25 +66,25 @@ class TaskRepository {
             );
           } catch (e) {
             debugPrint(
-              '❌ [SYNC FAILED]: Could not create "${task.title}" ($e).',
+              '❌ Could not create "${task.title}" ($e).',
             );
           }
         }
         // CASE B: Existing server task edited offline (ID > 0) -> Call UPDATE endpoint
         else if (task.id != null && task.id! > 0) {
           debugPrint(
-            '🔄 [SYNCING EDIT]: Pushing updates for task "${task.title}"...',
+            '🔄 Pushing updates for task "${task.title}"...',
           );
           try {
             await apiService.updateTask(task);
             updatedList[i] = task.copyWith(isSynced: true);
             cacheChanged = true;
             debugPrint(
-              '✅ [SYNCED EDIT]: Updates pushed for "${task.title}" (ID: ${task.id}).',
+              '✅ Updates pushed for "${task.title}" (ID: ${task.id}).',
             );
           } catch (e) {
             debugPrint(
-              '❌ [SYNC FAILED]: Could not update "${task.title}" ($e).',
+              '❌ Could not update "${task.title}" ($e).',
             );
           }
         }
@@ -104,7 +104,7 @@ class TaskRepository {
       final createdTask = await apiService.createTask(task);
       currentTasks.add(createdTask.copyWith(isSynced: true));
       await cacheService.saveCache(currentTasks);
-      debugPrint('✅ [SERVER CREATED]: Task created on backend.');
+      debugPrint('✅ Task created on backend.');
     } catch (e) {
       // Assign temporary negative ID so local state can identify it uniquely as a creation
       final tempId = -DateTime.now().millisecondsSinceEpoch;
@@ -113,7 +113,7 @@ class TaskRepository {
       currentTasks.add(offlineTask);
       await cacheService.saveCache(currentTasks);
       debugPrint(
-        '📱 [OFFLINE CREATED]: Saved task locally with temp ID: $tempId',
+        '📱 OFFLINE : Saved task locally with temp ID: $tempId',
       );
     }
   }
@@ -138,14 +138,14 @@ class TaskRepository {
 
       // Try server update first
       await apiService.updateTask(task);
-      debugPrint('✅ [SERVER UPDATED]: Task updated on backend.');
+      debugPrint('✅ SERVER UPDATED: Task updated on backend.');
 
       if (index != -1) {
         currentTasks[index] = task.copyWith(isSynced: true);
         await cacheService.saveCache(currentTasks);
       }
     } catch (e) {
-      debugPrint('📱 [OFFLINE UPDATE]: Update saved locally.');
+      debugPrint('📱OFFLINE UPDATE: Update saved locally.');
       if (index != -1) {
         currentTasks[index] = updatedTask;
         await cacheService.saveCache(currentTasks);
@@ -166,9 +166,9 @@ class TaskRepository {
 
     try {
       await apiService.deleteTask(id);
-      debugPrint('✅ [SERVER DELETED]: Task removed from backend.');
+      debugPrint('✅ SERVER DELETED: Task removed from backend.');
     } catch (e) {
-      debugPrint('📱 [OFFLINE DELETE]: Delete saved locally.');
+      debugPrint('📱OFFLINE DELETE: Delete saved locally.');
     }
   }
 }
