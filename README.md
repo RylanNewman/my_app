@@ -4,21 +4,22 @@ A full-stack, cross-platform Task Management application featuring a backend bui
 
 Architecture:
 
-┌──────────────────────────────────────┐       ┌──────────────────────────────────────┐
-│        Flutter Client (MVVM)         │       │          .NET 10 Backend API         │
-├──────────────────────────────────────┤       ├──────────────────────────────────────┤
-│                                      │       │                                      │
-│  View (Widgets UI)                   │       │  Controllers / Endpoints             │
-│   │                                  │       │   │                                  │
-│   ▼ Reacts to State                  │       │   ▼ Validates Input                  │
-│  ViewModel (Logic)                   │       │  Business / Domain Layer             │
-│   │                                  │       │   │                                  │
-│   ▼ Calls Service                    │       │   ▼ Calls Persistence                │
-│  Repositories / Dio                  │       │  EF Core / Database                  │
-│   │                                  │       │   ▲                                  │
-└───┼──────────────────────────────────┘       └───┼──────────────────────────────────┘
-    │                                              │
-    └─────────────── HTTP / JSON ──────────────────┘ 
+```text
+  Flutter Client (MVVM)                  .NET 10 Backend API
+┌────────────────────────┐             ┌────────────────────────┐
+│   View (Widgets UI)    │             │ Controllers / Endpoints│
+└───────────┬────────────┘             └───────────┬────────────┘
+            │                                      │             
+            ▼ Reacts to State                      ▼ Validates Input
+┌────────────────────────┐             ┌────────────────────────┐
+│   ViewModel (Logic)    │             │ Business / Domain Layer│
+└───────────┬────────────┘             └───────────┬────────────┘
+            │                                      │             
+            ▼ Calls Service                        ▼ Calls Persistence
+┌────────────────────────┐             ┌────────────────────────┐
+│   Repositories / Dio   │ <─HTTP/JSON─> │   EF Core / Database   │
+└────────────────────────┘             └────────────────────────┘
+```
                     
 
 
