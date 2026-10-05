@@ -2,30 +2,23 @@
 
 A full-stack, cross-platform Task Management application featuring a backend built with **.NET 10 REST API** and a multi-platform mobile/desktop client built with **Flutter** adhering to the **MVVM (Model-View-ViewModel)** architectural pattern.
 
----
+Architecture:
 
-flowchart TD
-    subgraph Client["Flutter Client (MVVM)"]
-        direction TB
-        V["View (Widgets UI)"]
-        VM["ViewModel (State & Logic)"]
-        R["Repositories / Dio"]
-
-        V -->|"User Actions / Reacts to State"| VM
-        VM -->|"Calls API Service"| R
-    end
-
-    subgraph Backend[".NET 10 Backend API"]
-        direction TB
-        C["Controllers / Endpoints"]
-        BL["Business / Domain Layer"]
-        DB["EF Core / Database"]
-
-        C -->|"Validates Input"| BL
-        BL -->|"Calls Persistence"| DB
-    end
-
-    R <===>|"HTTP / REST (JSON)"| C   
+┌──────────────────────────────────────┐       ┌──────────────────────────────────────┐
+│        Flutter Client (MVVM)         │       │          .NET 10 Backend API         │
+├──────────────────────────────────────┤       ├──────────────────────────────────────┤
+│                                      │       │                                      │
+│  View (Widgets UI)                   │       │  Controllers / Endpoints             │
+│   │                                  │       │   │                                  │
+│   ▼ Reacts to State                  │       │   ▼ Validates Input                  │
+│  ViewModel (Logic)                   │       │  Business / Domain Layer             │
+│   │                                  │       │   │                                  │
+│   ▼ Calls Service                    │       │   ▼ Calls Persistence                │
+│  Repositories / Dio                  │       │  EF Core / Database                  │
+│   │                                  │       │   ▲                                  │
+└───┼──────────────────────────────────┘       └───┼──────────────────────────────────┘
+    │                                              │
+    └─────────────── HTTP / JSON ──────────────────┘ 
                     
 
 
