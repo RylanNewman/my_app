@@ -11,7 +11,7 @@ class TaskSyncService {
 
   TaskSyncService({required this.repository, required this.onSyncCompleted});
 
-  /// Starts polling every 60 seconds
+  // Starts polling every 60 seconds
   void startAutoSync() {
     _timer?.cancel();
     _timer = Timer.periodic(const Duration(seconds: 60), (_) async {
