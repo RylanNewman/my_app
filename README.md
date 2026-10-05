@@ -4,24 +4,28 @@ A full-stack, cross-platform Task Management application featuring a backend bui
 
 ---
 
-## 🏗️ Architecture Overview
+flowchart TD
+    subgraph Client["Flutter Client (MVVM)"]
+        direction TB
+        V["View (Widgets UI)"]
+        VM["ViewModel (State & Logic)"]
+        R["Repositories / Dio"]
 
+        V -->|"User Actions / Reacts to State"| VM
+        VM -->|"Calls API Service"| R
+    end
 
+    subgraph Backend[".NET 10 Backend API"]
+        direction TB
+        C["Controllers / Endpoints"]
+        BL["Business / Domain Layer"]
+        DB["EF Core / Database"]
 
-   Flutter Client                                .NET 10 Backend API 
-          ↓                                               ↓
-          
-   View (Widgets UI)                           Controllers / Endpoints 
-          ↓                                               ↓
- Reacts to State                                Validates Input
-           ↓                                              ↓                                 
-                  
- ViewModel (Logic)                             Business / Domain Layer 
-          ↓                                               ↓   
- Calls Service                                   Calls Persistence
-          ↓                                               ↓                               
-                              HTTP / JSON     
- Repositories / Dio       <────────────────>    EF Core / Database      
+        C -->|"Validates Input"| BL
+        BL -->|"Calls Persistence"| DB
+    end
+
+    R <===>|"HTTP / REST (JSON)"| C   
                     
 
 
