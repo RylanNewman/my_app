@@ -17,10 +17,10 @@ class TaskCacheService {
 
       await prefs.setString(_cacheKey, encodedData);
       debugPrint(
-        '💾 [CACHE SAVE SUCCESS]: Persisted ${tasks.length} task(s) to storage.',
+        '💾 CACHE SAVE SUCCESS: Persisted ${tasks.length} task(s) to storage.',
       );
     } catch (e) {
-      debugPrint('❌ [CACHE SAVE ERROR]: Failed to persist cache: $e');
+      debugPrint('❌ CACHE SAVE ERROR: Failed to persist cache: $e');
     }
   }
 
@@ -31,7 +31,7 @@ class TaskCacheService {
       final String? cachedData = prefs.getString(_cacheKey);
 
       if (cachedData == null || cachedData.isEmpty) {
-        debugPrint('📱 [CACHE READ]: No cached tasks found in storage.');
+        debugPrint('📱No cached tasks found in storage.');
         return [];
       }
 
@@ -41,12 +41,12 @@ class TaskCacheService {
           .toList();
 
       debugPrint(
-        '📱 [CACHE READ SUCCESS]: Loaded ${tasks.length} task(s) from storage.',
+        '📱 Loaded ${tasks.length} task(s) from storage.',
       );
       return tasks;
     } catch (e) {
       debugPrint(
-        '❌ [CACHE READ ERROR]: Failed to parse local storage ($e). Clearing cache.',
+        '❌ Failed to parse local storage ($e). Clearing cache.',
       );
       return [];
     }

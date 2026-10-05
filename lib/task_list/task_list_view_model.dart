@@ -1,22 +1,36 @@
 import 'package:flutter/foundation.dart';
 import 'package:my_app/models/task.dart';
 import 'package:my_app/repositories/task_repository.dart';
+import 'package:my_app/services/task_sync_service.dart';
 
 class TaskListViewModel extends ChangeNotifier {
   final TaskRepository repository;
+  late final TaskSyncService _syncService;
+
   List<TaskItem> tasks = [];
   bool isLoading = false;
   bool _isSyncing = false;
   String? errorMessage;
 
-  TaskListViewModel({required this.repository});
+  TaskListViewModel({required this.repository}) {
+    // Initialize TaskSyncService and set up callback to silently reload tasks on sync
+    _syncService = TaskSyncService(
+      repository: repository,
+      onSyncCompleted: () => loadTasks(silent: true),
+    );
+    _syncService.startAutoSync();
+  }
 
-  Future<void> loadTasks() async {
+  /// Loads tasks from local cache and syncs with remote server.
+  /// [silent] prevents showing the full-page loading spinner during background polling.
+  Future<void> loadTasks({bool silent = false}) async {
     // 1. Prevent duplicate concurrent runs if a load/sync is already in progress
     if (_isSyncing) return;
     _isSyncing = true;
 
-    isLoading = true;
+    if (!silent) {
+      isLoading = true;
+    }
     errorMessage = null;
     notifyListeners();
 
@@ -133,5 +147,12 @@ class TaskListViewModel extends ChangeNotifier {
     } catch (e) {
       errorMessage = "Offline mode: Deleted locally.";
     }
+  }
+
+  /// Clean up timer resources when ViewModel is disposed
+  @override
+  void dispose() {
+    _syncService.dispose();
+    super.dispose();
   }
 }

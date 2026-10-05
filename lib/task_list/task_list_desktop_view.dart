@@ -104,11 +104,7 @@ class _DesktopLayoutState extends State<DesktopLayout> {
             backgroundColor: Theme.of(context).colorScheme.inversePrimary,
             title: const Text('Task Manager Application'),
             actions: [
-              IconButton(
-                icon: const Icon(Icons.refresh),
-                tooltip: 'Refresh Tasks',
-                onPressed: () => viewModel.loadTasks(),
-              ),
+              
             ],
           ),
           body: Row(

@@ -58,7 +58,7 @@ class TaskApiService {
         throw const HttpException('Task not found');
       } else {
         throw HttpException(
-          'Failed to load task details (${response.statusCode})',
+          'Task details failed to load(${response.statusCode})',
         );
       }
     } on SocketException catch (e) {
