@@ -6,22 +6,23 @@ A full-stack, cross-platform Task Management application featuring a backend bui
 
 ## 🏗️ Architecture Overview
 
-The system follows a clean, decoupled client-server architecture:
 
-[ Flutter Client ]                            [ .NET 10 Backend API ]
-┌────────────────────────┐                    ┌─────────────────────────┐
-│ View (Widgets UI)      │                    │ Controllers / Endpoints │
-└───────────┬────────────┘                    └────────────┬────────────┘
-│ Reacts to State                              │ Validates Input
-▼                                              ▼
-┌────────────────────────┐                    ┌─────────────────────────┐
-│ ViewModel (Logic)      │                    │ Business / Domain Layer │
-└───────────┬────────────┘                    └────────────┬────────────┘
-│ Calls Service                                │ Calls Persistence
-▼                                              ▼
-┌────────────────────────┐    HTTP / JSON     ┌─────────────────────────┐
-│ Repositories / Dio     │ ◄────────────────► │ EF Core / Database      │
-└────────────────────────┘                    └─────────────────────────┘
+
+   Flutter Client                                .NET 10 Backend API 
+          ↓                                               ↓
+          
+   View (Widgets UI)                           Controllers / Endpoints 
+          ↓                                               ↓
+ Reacts to State                                Validates Input
+           ↓                                              ↓                                 
+                  
+ ViewModel (Logic)                             Business / Domain Layer 
+          ↓                                               ↓   
+ Calls Service                                   Calls Persistence
+          ↓                                               ↓                               
+                              HTTP / JSON     
+ Repositories / Dio       <────────────────>    EF Core / Database      
+                    
 
 
 ### Layer Responsibilities
@@ -70,7 +71,7 @@ Run the API project:
 dotnet run
 By default, the API will run on http://localhost:5246.
 
-Open Swagger/OpenAPI documentation in browser: https://localhost:7123/swagger
+
 
 2. Frontend Setup (Flutter Client)
 Navigate to the frontend directory:
