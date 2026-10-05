@@ -35,12 +35,12 @@ Architecture:
 
 ---
 
-## 🚀 Setup & Execution Guide
+## 🚀 Setup & Execution 
 
 ### Prerequisites
 * **Flutter SDK:** `>=3.19.0` (Dart `>=3.3.0`)
 * **.NET SDK:** `10.0` or higher
-* **IDE:** Visual Studio Code, Android Studio, or Visual Studio 2022+
+* **IDE:** Visual Studio Code
 
 ---
 
@@ -89,8 +89,6 @@ Configure the backend API base URL in lib/core/config/api_config.dart or via a .
 Android Emulator: http://10.0.2.2:5246/api
 
 iOS Simulator / Desktop: http://localhost:5246/api
-
-Physical Device: http://<YOUR_LOCAL_IP>:5246/api
 
 Launch the application:
 
